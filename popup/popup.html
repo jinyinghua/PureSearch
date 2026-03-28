@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PureSearch · 净网路标</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="ps-header">
+    <div class="ps-logo">
+      <span class="ps-logo-icon">🛡️</span>
+      <div>
+        <h1>PureSearch</h1>
+        <p class="ps-subtitle">净网路标</p>
+      </div>
+    </div>
+    <span class="ps-version" id="version">v1.0.1</span>
+  </header>
+
+  <section class="ps-status-card" id="statusCard">
+    <div class="ps-status-indicator">
+      <div class="ps-status-dot"></div>
+      <span>搜索保护中</span>
+    </div>
+  </section>
+
+  <section class="ps-stats">
+    <div class="ps-stat-item ps-stat-green">
+      <div class="ps-stat-number" id="statOfficial">0</div>
+      <div class="ps-stat-label">官网识别</div>
+      <div class="ps-stat-icon">✅</div>
+    </div>
+    <div class="ps-stat-item ps-stat-red">
+      <div class="ps-stat-number" id="statMarked">0</div>
+      <div class="ps-stat-label">假冒标记</div>
+      <div class="ps-stat-icon">🚫</div>
+    </div>
+    <div class="ps-stat-item ps-stat-blue">
+      <div class="ps-stat-number" id="statReports">0</div>
+      <div class="ps-stat-label">我的举报</div>
+      <div class="ps-stat-icon">🚩</div>
+    </div>
+  </section>
+
+  <section class="ps-actions">
+    <h3>快捷操作</h3>
+    <button class="ps-action-btn" id="btnReportCurrent">
+      <span class="ps-action-icon">🚩</span>
+      <span>举报当前网页</span>
+      <span class="ps-action-arrow">→</span>
+    </button>
+    <button class="ps-action-btn" id="btnViewReports">
+      <span class="ps-action-icon">📋</span>
+      <span>我的举报记录</span>
+      <span class="ps-action-arrow">→</span>
+    </button>
+    <button class="ps-action-btn" id="btnDatabase">
+      <span class="ps-action-icon">📦</span>
+      <span>软件官网数据库</span>
+      <span class="ps-action-arrow">→</span>
+    </button>
+  </section>
+
+  <section class="ps-settings">
+    <h3>功能开关</h3>
+    <label class="ps-toggle">
+      <span>Bing 搜索标注</span>
+      <input type="checkbox" id="toggleBing" checked>
+      <span class="ps-toggle-slider"></span>
+    </label>
+    <label class="ps-toggle">
+      <span>百度搜索标注</span>
+      <input type="checkbox" id="toggleBaidu" checked>
+      <span class="ps-toggle-slider"></span>
+    </label>
+  </section>
+
+  <footer class="ps-footer">
+    <p>📡 规则库版本: <span id="dbVersion">2025.06.22</span></p>
+    <p>收录 <span id="dbCount">35</span> 款软件 · 开源免费</p>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

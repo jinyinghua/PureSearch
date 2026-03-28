@@ -1,0 +1,550 @@
+{
+  "version": "2026.03.28",
+  "last_updated": "2026-03-28",
+  "global_fake_patterns": [
+    "softonic.com",
+    "onlinedown.net",
+    "xiazaiba.com",
+    "duote.com",
+    "pc6.com",
+    "downza.cn",
+    "xitongzhijia.net",
+    "crsky.com"
+  ],
+  "software_list": [
+    {
+      "id": "nvidia",
+      "name": "NVIDIA 驱动",
+      "category": "驱动",
+      "keywords": [
+        "nvidia",
+        "英伟达",
+        "显卡驱动"
+      ],
+      "official_domains": [
+        "nvidia.cn",
+        "nvidia.com"
+      ],
+      "known_fakes": [
+        "nvidia-cn.com",
+        "nvidiadown.com"
+      ]
+    },
+    {
+      "id": "amd",
+      "name": "AMD 驱动",
+      "category": "驱动",
+      "keywords": [
+        "amd",
+        "radeon",
+        "显卡驱动"
+      ],
+      "official_domains": [
+        "amd.com"
+      ],
+      "known_fakes": [
+        "amd-cn.com"
+      ]
+    },
+    {
+      "id": "adobe",
+      "name": "Adobe Creative Cloud",
+      "category": "设计",
+      "keywords": [
+        "adobe",
+        "photoshop",
+        "ps下载",
+        "premiere"
+      ],
+      "official_domains": [
+        "adobe.com",
+        "adobe.com.cn"
+      ],
+      "known_fakes": [
+        "adobe-cn.com",
+        "adobedown.com"
+      ]
+    },
+    {
+      "id": "jetbrains",
+      "name": "JetBrains IDE",
+      "category": "开发",
+      "keywords": [
+        "jetbrains",
+        "pycharm",
+        "intellij",
+        "idea"
+      ],
+      "official_domains": [
+        "jetbrains.com",
+        "jetbrains.com.cn"
+      ],
+      "known_fakes": [
+        "jetbrains-cn.com"
+      ]
+    },
+    {
+      "id": "huorong",
+      "name": "火绒安全",
+      "category": "安全",
+      "keywords": [
+        "火绒",
+        "huorong"
+      ],
+      "official_domains": [
+        "huorong.cn"
+      ],
+      "known_fakes": [
+        "huorong.com.cn",
+        "huorong-cn.com"
+      ]
+    },
+    {
+      "id": "360",
+      "name": "360",
+      "category": "安全",
+      "keywords": [
+        "360",
+        "360安全"
+      ],
+      "official_domains": [
+        "www.360.cn",
+        "www.360.com",
+        "weishi.360.cn",
+        "sd.360.cn"
+      ],
+      "known_fakes": [
+        "360weishi-360.cn",
+        "safeguard-360.com",
+        "safeguards-360.cn",
+        "360guard-360.cn",
+        "www.360ccn.com",
+        "www.xiaoyisysreset.com"
+      ]
+    },
+    {
+      "id": "360browser",
+      "name": "360极速浏览器",
+      "category": "浏览器",
+      "keywords": [
+        "360极速浏览器"
+      ],
+      "official_domains": [
+        "browser.360.cn"
+      ],
+      "known_fakes": [
+        "360edge.cn"
+      ]
+    },
+    {
+      "id": "360chromex",
+      "name": "360极速浏览器X",
+      "category": "浏览器",
+      "keywords": [
+        "360极速浏览器X"
+      ],
+      "official_domains": [
+        "chromex.360.cn"
+      ],
+      "known_fakes": [
+        "chromiumx-360.cn"
+      ]
+    },
+    {
+      "id": "kaspersky",
+      "name": "卡巴斯基",
+      "category": "安全",
+      "keywords": [
+        "卡巴斯基",
+        "kaspersky"
+      ],
+      "official_domains": [
+        "kaspersky.com.cn",
+        "kaspersky.com"
+      ],
+      "known_fakes": [
+        "kaspersky-cn.com"
+      ]
+    },
+    {
+      "id": "7zip",
+      "name": "7-Zip",
+      "category": "工具",
+      "keywords": [
+        "7zip",
+        "7-zip"
+      ],
+      "official_domains": [
+        "7-zip.org"
+      ],
+      "known_fakes": [
+        "7-zip.cn",
+        "7zip.cn"
+      ]
+    },
+    {
+      "id": "obs",
+      "name": "OBS Studio",
+      "category": "多媒体",
+      "keywords": [
+        "obs"
+      ],
+      "official_domains": [
+        "obsproject.com"
+      ],
+      "known_fakes": [
+        "obs-cn.com",
+        "obs-studio.cn"
+      ]
+    },
+    {
+      "id": "python",
+      "name": "Python",
+      "category": "开发",
+      "keywords": [
+        "python"
+      ],
+      "official_domains": [
+        "python.org"
+      ],
+      "known_fakes": [
+        "python-cn.com"
+      ]
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "category": "开发",
+      "keywords": [
+        "nodejs"
+      ],
+      "official_domains": [
+        "nodejs.org"
+      ],
+      "known_fakes": [
+        "nodejs.cn"
+      ]
+    },
+    {
+      "id": "vscode",
+      "name": "VS Code",
+      "category": "开发",
+      "keywords": [
+        "vscode"
+      ],
+      "official_domains": [
+        "code.visualstudio.com"
+      ],
+      "known_fakes": [
+        "vscode.cn"
+      ]
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "category": "开发",
+      "keywords": [
+        "git"
+      ],
+      "official_domains": [
+        "git-scm.com"
+      ],
+      "known_fakes": [
+        "git-cn.com"
+      ]
+    },
+    {
+      "id": "firefox",
+      "name": "Mozilla Firefox",
+      "category": "浏览器",
+      "keywords": [
+        "firefox",
+        "火狐"
+      ],
+      "official_domains": [
+        "mozilla.org",
+        "firefox.com"
+      ],
+      "known_fakes": [
+        "firefox.cn"
+      ]
+    },
+    {
+      "id": "notepadpp",
+      "name": "Notepad++",
+      "category": "开发",
+      "keywords": [
+        "notepad++"
+      ],
+      "official_domains": [
+        "notepad-plus-plus.org"
+      ],
+      "known_fakes": [
+        "notepad-plus.cn"
+      ]
+    },
+    {
+      "id": "telegram",
+      "name": "Telegram",
+      "category": "社交",
+      "keywords": [
+        "telegram",
+        "电报"
+      ],
+      "official_domains": [
+        "telegram.org"
+      ],
+      "known_fakes": [
+        "telegram.cn"
+      ]
+    },
+    {
+      "id": "steam",
+      "name": "Steam",
+      "category": "游戏",
+      "keywords": [
+        "steam"
+      ],
+      "official_domains": [
+        "steampowered.com"
+      ],
+      "known_fakes": [
+        "steam.cn.com"
+      ]
+    },
+    {
+      "id": "wps",
+      "name": "WPS Office",
+      "category": "办公",
+      "keywords": [
+        "wps"
+      ],
+      "official_domains": [
+        "wps.cn",
+        "wps.com"
+      ],
+      "known_fakes": [
+        "wps-office.cn"
+      ]
+    },
+    {
+      "id": "chrome",
+      "name": "Google Chrome",
+      "category": "浏览器",
+      "keywords": [
+        "chrome",
+        "谷歌浏览器"
+      ],
+      "official_domains": [
+        "google.cn/chrome",
+        "google.com/chrome",
+        "google.com",
+        "google.cn"
+      ],
+      "known_fakes": [
+        "chrome.cn"
+      ]
+    },
+    {
+      "id": "potplayer",
+      "name": "PotPlayer",
+      "category": "多媒体",
+      "keywords": [
+        "potplayer"
+      ],
+      "official_domains": [
+        "potplayer.daum.net"
+      ],
+      "known_fakes": [
+        "potplayer.cn"
+      ]
+    },
+    {
+      "id": "everything",
+      "name": "Everything",
+      "category": "工具",
+      "keywords": [
+        "everything"
+      ],
+      "official_domains": [
+        "voidtools.com"
+      ],
+      "known_fakes": [
+        "everything.cn"
+      ]
+    },
+    {
+      "id": "gmail",
+      "name": "Gmail",
+      "category": "办公",
+      "keywords": [
+        "gmail",
+        "谷歌邮箱"
+      ],
+      "official_domains": [
+        "mail.google.com",
+        "google.com/gmail"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "teams",
+      "name": "Microsoft Teams",
+      "category": "办公",
+      "keywords": [
+        "teams",
+        "微软会议"
+      ],
+      "official_domains": [
+        "teams.microsoft.com",
+        "www.microsoft.com/zh-cn/microsoft-teams"
+      ],
+      "known_fakes": [
+        "teams-window.com",
+        "app-teams.hl.cn",
+        "teams-down.com.cn"
+      ]
+    },
+    {
+      "id": "msstore",
+      "name": "Microsoft Store",
+      "category": "办公",
+      "keywords": [
+        "microsoft",
+        "微软"
+      ],
+      "official_domains": [
+        "store.microsoft.com"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "line",
+      "name": "LINE",
+      "category": "社交",
+      "keywords": [
+        "line"
+      ],
+      "official_domains": [
+        "line.me"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "google-auth",
+      "name": "Google Authenticator",
+      "category": "工具",
+      "keywords": [
+        "google authenticator",
+        "谷歌验证器"
+      ],
+      "official_domains": [
+        "safety.google"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "youdao",
+      "name": "网易有道",
+      "category": "工具",
+      "keywords": [
+        "有道",
+        "youdao"
+      ],
+      "official_domains": [
+        "youdao.com"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "qishui",
+      "name": "汽水音乐",
+      "category": "影音",
+      "keywords": [
+        "汽水音乐"
+      ],
+      "official_domains": [
+        "qishui.douyin.com"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "dingtalk",
+      "name": "钉钉",
+      "category": "办公",
+      "keywords": [
+        "钉钉",
+        "dingtalk"
+      ],
+      "official_domains": [
+        "dingtalk.com"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "sogou-pinyin",
+      "name": "搜狗输入法",
+      "category": "工具",
+      "keywords": [
+        "搜狗输入法",
+        "搜狗"
+      ],
+      "official_domains": [
+        "shurufa.sogou.com"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "wechat",
+      "name": "微信",
+      "category": "社交",
+      "keywords": [
+        "微信",
+        "wechat"
+      ],
+      "official_domains": [
+        "weixin.qq.com"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "qq",
+      "name": "QQ",
+      "category": "社交",
+      "keywords": [
+        "qq",
+        "腾讯qq"
+      ],
+      "official_domains": [
+        "im.qq.com"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "todesk",
+      "name": "ToDesk",
+      "category": "工具",
+      "keywords": [
+        "todesk",
+        "远程桌面"
+      ],
+      "official_domains": [
+        "todesk.com"
+      ],
+      "known_fakes": []
+    },
+    {
+      "id": "sunlogin",
+      "name": "向日葵远程控制",
+      "category": "工具",
+      "keywords": [
+        "向日葵",
+        "sunlogin"
+      ],
+      "official_domains": [
+        "sunlogin.oray.com"
+      ],
+      "known_fakes": []
+    }
+  ]
+}

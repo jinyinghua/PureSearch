@@ -1,0 +1,282 @@
+/* ============================================
+   PureSearch · Bing 搜索结果注入样式
+   ============================================ */
+
+/* ===== 变量定义 ===== */
+:root {
+  --ps-green: #16a34a;
+  --ps-green-bg: #f0fdf4;
+  --ps-green-border: #86efac;
+  --ps-red: #dc2626;
+  --ps-red-bg: #fef2f2;
+  --ps-red-border: #fca5a5;
+  --ps-yellow: #d97706;
+  --ps-yellow-bg: #fffbeb;
+  --ps-yellow-border: #fcd34d;
+  --ps-blue: #2563eb;
+  --ps-gray: #6b7280;
+  --ps-radius: 12px;
+  --ps-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --ps-shadow-lg: 0 4px 14px rgba(0,0,0,0.1);
+  --ps-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+}
+
+/* ===== 顶部安全摘要栏 ===== */
+.ps-summary {
+  background: linear-gradient(135deg, #f0f9ff, #f0fdf4);
+  border: 1px solid #bae6fd;
+  border-radius: var(--ps-radius);
+  padding: 12px 20px;
+  margin-bottom: 16px;
+  font-family: var(--ps-font);
+  box-shadow: var(--ps-shadow);
+  animation: ps-fadeIn 0.4s ease;
+}
+
+.ps-summary-inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.ps-summary-logo {
+  font-weight: 700;
+  font-size: 14px;
+  color: #0c4a6e;
+  white-space: nowrap;
+}
+
+.ps-summary-divider {
+  color: #cbd5e1;
+  font-weight: 300;
+}
+
+.ps-summary-stat {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+
+.ps-stat-official { background: var(--ps-green-bg); color: var(--ps-green); border: 1px solid var(--ps-green-border); }
+.ps-stat-fake { background: var(--ps-red-bg); color: var(--ps-red); border: 1px solid var(--ps-red-border); }
+.ps-stat-gray { background: var(--ps-yellow-bg); color: var(--ps-yellow); border: 1px solid var(--ps-yellow-border); }
+
+/* ===== 官网结果样式 ===== */
+li.ps-result-official {
+  background: var(--ps-green-bg) !important;
+  border: 2px solid var(--ps-green-border) !important;
+  border-radius: var(--ps-radius) !important;
+  padding: 16px 20px !important;
+  margin-bottom: 12px !important;
+  position: relative !important;
+  box-shadow: var(--ps-shadow-lg) !important;
+  animation: ps-slideDown 0.5s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+li.ps-result-official:hover {
+  border-color: var(--ps-green) !important;
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.15) !important;
+}
+
+/* 官网呼吸灯效果 */
+li.ps-result-official::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 10px;
+  height: 10px;
+  background: var(--ps-green);
+  border-radius: 50%;
+  animation: ps-pulse 2s infinite;
+}
+
+/* ===== 官网认证徽章 ===== */
+.ps-badge {
+  font-family: var(--ps-font);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ps-badge-official {
+  background: linear-gradient(90deg, #dcfce7, #f0fdf4);
+  border: 1px solid var(--ps-green-border);
+  border-radius: 8px;
+  padding: 8px 14px;
+}
+
+.ps-badge-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.ps-badge-text {
+  font-size: 13.5px;
+  color: #15803d;
+}
+
+.ps-badge-text strong {
+  color: var(--ps-green);
+  font-weight: 700;
+}
+
+.ps-badge-sub {
+  font-size: 11px;
+  color: #86efac;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* ===== 盗版/假冒结果覆盖 ===== */
+li.ps-result-fake {
+  background: var(--ps-red-bg) !important;
+  border: 2px solid var(--ps-red-border) !important;
+  border-radius: var(--ps-radius) !important;
+  padding: 0 !important;
+  margin-bottom: 12px !important;
+  overflow: hidden;
+  opacity: 0.85;
+  animation: ps-fadeIn 0.4s ease;
+}
+
+.ps-overlay-fake {
+  padding: 16px 20px;
+}
+
+.ps-overlay-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--ps-font);
+}
+
+.ps-overlay-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.ps-overlay-text {
+  font-size: 13.5px;
+  color: #991b1b;
+  flex: 1;
+  min-width: 200px;
+}
+
+.ps-overlay-text strong {
+  color: var(--ps-red);
+}
+
+.ps-overlay-text em {
+  font-style: normal;
+  font-weight: 600;
+  color: #b91c1c;
+}
+
+.ps-overlay-link {
+  display: inline-block;
+  background: var(--ps-green);
+  color: #fff !important;
+  text-decoration: none !important;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.ps-overlay-link:hover {
+  background: #15803d;
+}
+
+/* ===== 灰名单(下载站)警告 ===== */
+li.ps-result-gray {
+  position: relative !important;
+}
+
+.ps-overlay-gray {
+  background: var(--ps-yellow-bg);
+  border: 1px solid var(--ps-yellow-border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-bottom: 8px;
+}
+
+.ps-overlay-gray .ps-overlay-text {
+  color: #92400e;
+  font-size: 12.5px;
+}
+
+.ps-overlay-gray .ps-overlay-text strong {
+  color: var(--ps-yellow);
+}
+
+/* ===== 举报按钮 ===== */
+.ps-report-btn {
+  font-family: var(--ps-font);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.ps-report-small {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: #f3f4f6;
+  color: var(--ps-gray);
+  font-size: 11.5px;
+  padding: 4px 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 鼠标悬停在搜索结果上时显示举报按钮 */
+li.b_algo:hover .ps-report-small {
+  opacity: 1;
+}
+
+.ps-report-small:hover {
+  background: var(--ps-red-bg);
+  color: var(--ps-red);
+}
+
+.ps-report-inline {
+  background: #fff;
+  color: var(--ps-red);
+  border: 1px solid var(--ps-red-border) !important;
+  font-size: 12px;
+  padding: 5px 12px;
+  font-weight: 600;
+}
+
+.ps-report-inline:hover {
+  background: var(--ps-red);
+  color: #fff;
+}
+
+/* ===== 动画 ===== */
+@keyframes ps-fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ps-slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ps-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+  50% { opacity: 0.8; transform: scale(1.1); box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+}

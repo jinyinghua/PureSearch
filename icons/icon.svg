@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <!-- 圆角矩形背景 -->
+  <rect width="128" height="128" rx="28" fill="url(#bg)"/>
+  <!-- 盾牌 -->
+  <path d="M64 22 L98 38 L98 62 C98 84 82 102 64 108 C46 102 30 84 30 62 L30 38 Z"
+        fill="none" stroke="#ffffff" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M64 28 L93 42 L93 62 C93 81 79 97 64 103 C49 97 35 81 35 62 L35 42 Z"
+        fill="rgba(255,255,255,0.15)"/>
+  <!-- 对勾 -->
+  <polyline points="48,64 58,76 80,52" fill="none" stroke="#4ade80" stroke-width="7"
+            stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>举报假冒网站 - PureSearch</title>
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+  <div class="report-container">
+    <header class="report-header">
+      <div class="report-logo">🛡️ PureSearch</div>
+      <h1>举报假冒网站</h1>
+      <p>帮助社区识别和拦截更多假冒官网</p>
+    </header>
+
+    <div class="report-steps">
+      <div class="report-step active" data-step="1"><div class="step-dot">1</div><span>网站信息</span></div>
+      <div class="step-line"></div>
+      <div class="report-step" data-step="2"><div class="step-dot">2</div><span>详细描述</span></div>
+      <div class="step-line"></div>
+      <div class="report-step" data-step="3"><div class="step-dot">3</div><span>提交完成</span></div>
+    </div>
+
+    <form id="reportForm">
+      <section class="report-section" id="step1">
+        <div class="form-group">
+          <label class="form-label">被举报网址 <span class="required">*</span></label>
+          <input type="url" id="reportUrl" class="form-input" placeholder="https://example-fake.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">该网站假冒的软件 <span class="required">*</span></label>
+          <select id="reportSoftware" class="form-input form-select" required>
+            <option value="">-- 请选择 --</option>
+            <optgroup label="安全软件">
+              <option value="火绒安全">火绒安全</option>
+              <option value="360安全卫士">360安全卫士</option>
+              <option value="卡巴斯基">卡巴斯基</option>
+              <option value="腾讯电脑管家">腾讯电脑管家</option>
+              <option value="金山毒霸">金山毒霸</option>
+            </optgroup>
+            <optgroup label="常用工具">
+              <option value="7-Zip">7-Zip</option>
+              <option value="OBS Studio">OBS Studio</option>
+              <option value="VLC">VLC Media Player</option>
+              <option value="Python">Python</option>
+              <option value="Node.js">Node.js</option>
+              <option value="VS Code">Visual Studio Code</option>
+              <option value="Git">Git</option>
+              <option value="Firefox">Mozilla Firefox</option>
+              <option value="Chrome">Google Chrome</option>
+              <option value="Notepad++">Notepad++</option>
+              <option value="Steam">Steam</option>
+              <option value="other">其他软件...</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group" id="otherSoftwareGroup" style="display:none;">
+          <label class="form-label">软件名称</label>
+          <input type="text" id="otherSoftware" class="form-input" placeholder="请输入软件名称">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">威胁类型 <span class="required">*</span></label>
+          <div class="form-checkboxes">
+            <label class="form-checkbox"><input type="checkbox" name="threat" value="fake_official"> 假冒官网</label>
+            <label class="form-checkbox"><input type="checkbox" name="threat" value="bundleware"> 捆绑安装</label>
+            <label class="form-checkbox"><input type="checkbox" name="threat" value="malware"> 携带木马/病毒</label>
+            <label class="form-checkbox"><input type="checkbox" name="threat" value="seo_poison"> SEO投毒</label>
+          </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" id="btnNext1">下一步 →</button>
+      </section>
+
+      <section class="report-section" id="step2" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">详细描述</label>
+          <textarea id="reportDesc" class="form-input form-textarea" rows="5" placeholder="请描述您遇到的问题..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">来源搜索引擎</label>
+          <select id="reportSource" class="form-input form-select">
+            <option value="">-- 可选 --</option>
+            <option value="bing">Bing</option>
+            <option value="baidu">百度</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">截图证据</label>
+          <div class="form-file-area" id="fileArea">
+            <input type="file" id="reportScreenshot" accept="image/*" multiple style="display:none;">
+            <div class="file-placeholder"><span>点击或拖拽上传截图 (可选)</span></div>
+            <div class="file-preview" id="filePreview"></div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="btnPrev2">← 上一步</button>
+          <button type="button" class="btn btn-primary" id="btnSubmit">🚩 提交举报</button>
+        </div>
+      </section>
+
+      <section class="report-section" id="step3" style="display:none;">
+        <div class="report-success">
+          <div class="success-icon">✅</div>
+          <h2>举报已提交</h2>
+          <p>感谢您对净网行动的贡献！</p>
+          <div class="success-info">
+            <div class="success-row"><span>举报编号</span><span id="reportId">-</span></div>
+            <div class="success-row"><span>举报状态</span><span class="status-pending">待审核</span></div>
+          </div>
+          <button type="button" class="btn btn-primary" id="btnClose">关闭窗口</button>
+        </div>
+      </section>
+    </form>
+  </div>
+  <script src="report.js"></script>
+</body>
+</html>

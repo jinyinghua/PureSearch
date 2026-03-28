@@ -1,0 +1,260 @@
+/* ============================================
+   PureSearch · Popup 仪表盘样式
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 360px;
+  min-height: 520px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans SC", sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+/* ===== Header ===== */
+.ps-header {
+  background: linear-gradient(135deg, #1e40af, #2563eb);
+  color: #fff;
+  padding: 18px 20px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ps-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ps-logo-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.ps-logo h1 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.ps-subtitle {
+  font-size: 11px;
+  color: #93c5fd;
+  font-weight: 400;
+  margin-top: 1px;
+}
+
+.ps-version {
+  background: rgba(255,255,255,0.15);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* ===== 状态卡片 ===== */
+.ps-status-card {
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+  border: 1px solid #86efac;
+  border-radius: 10px;
+  margin: 14px 16px 0;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.ps-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #15803d;
+}
+
+.ps-status-dot {
+  width: 10px;
+  height: 10px;
+  background: #16a34a;
+  border-radius: 50%;
+  animation: ps-pulse 2s infinite;
+}
+
+@keyframes ps-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(22, 163, 74, 0); }
+}
+
+/* ===== 统计卡片 ===== */
+.ps-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 14px 16px 0;
+}
+
+.ps-stat-item {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px 10px 12px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ps-stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.ps-stat-number {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.ps-stat-label {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+.ps-stat-icon {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.ps-stat-green .ps-stat-number { color: #16a34a; }
+.ps-stat-red .ps-stat-number { color: #dc2626; }
+.ps-stat-blue .ps-stat-number { color: #2563eb; }
+
+/* ===== 快捷操作 ===== */
+.ps-actions {
+  padding: 14px 16px 0;
+}
+
+.ps-actions h3,
+.ps-settings h3 {
+  font-size: 12px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.ps-action-btn {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #334155;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.ps-action-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  transform: translateX(2px);
+}
+
+.ps-action-icon {
+  font-size: 18px;
+}
+
+.ps-action-arrow {
+  margin-left: auto;
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+/* ===== 设置开关 ===== */
+.ps-settings {
+  padding: 14px 16px 0;
+}
+
+.ps-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  transition: background 0.2s;
+}
+
+.ps-toggle:hover {
+  background: #f8fafc;
+}
+
+.ps-toggle input {
+  display: none;
+}
+
+.ps-toggle-slider {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  background: #cbd5e1;
+  border-radius: 11px;
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+
+.ps-toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.ps-toggle input:checked + .ps-toggle-slider {
+  background: #2563eb;
+}
+
+.ps-toggle input:checked + .ps-toggle-slider::after {
+  transform: translateX(18px);
+}
+
+/* ===== Footer ===== */
+.ps-footer {
+  padding: 14px 16px 16px;
+  text-align: center;
+  font-size: 11px;
+  color: #94a3b8;
+  line-height: 1.6;
+}
