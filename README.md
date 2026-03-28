@@ -54,20 +54,22 @@
 ## 🚀 安装方法
 
 ### 开发者模式加载
-1. 打开 Chrome/Edge 浏览器
-2. 进入 `chrome://extensions/`
-3. 开启右上角 **「开发者模式」**
-4. 点击 **「加载已解压的扩展程序」**
-5. 选择 `PureSearch` 文件夹
+1. 下载源码到本地并解压
+2. 打开 Chrome/Edge 浏览器
+3. 进入 `chrome://extensions/`
+4. 开启右上角 **「开发者模式」**
+5. 点击 **「加载已解压的扩展程序」**
+6. 选择前面解压出来的 `PureSearch` 文件夹
+7. 完成！图标出现在浏览器工具栏
+
+
+### crx 文件加载
+1. 打开 Github Release[https://github.com/jinyinghua/PureSearch/releases]下载 crx 文件
+2. 打开 Chrome/Edge 浏览器
+3. 进入 `chrome://extensions/`
+4. 开启右上角 **「开发者模式」**
+5. 拖动 crx 文件到窗口安装
 6. 完成！图标出现在浏览器工具栏
-
-
-### CRX 文件加载
-1. 打开 Chrome/Edge 浏览器
-2. 进入 `chrome://extensions/`
-3. 开启右上角 **「开发者模式」**
-4. 拖动 CRX 文件到窗口安装
-5. 完成！图标出现在浏览器工具栏
 ---
 
 ## 📁 项目结构
