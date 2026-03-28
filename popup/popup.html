@@ -15,7 +15,7 @@
         <p class="ps-subtitle">净网路标</p>
       </div>
     </div>
-    <span class="ps-version" id="version">v1.0.1</span>
+    <span class="ps-version" id="version">v1.1.0</span>
   </header>
 
   <section class="ps-status-card" id="statusCard">
@@ -55,9 +55,9 @@
       <span>我的举报记录</span>
       <span class="ps-action-arrow">→</span>
     </button>
-    <button class="ps-action-btn" id="btnDatabase">
-      <span class="ps-action-icon">📦</span>
-      <span>软件官网数据库</span>
+    <button class="ps-action-btn" id="btnSync">
+      <span class="ps-action-icon">🔄</span>
+      <span>同步云端数据库</span>
       <span class="ps-action-arrow">→</span>
     </button>
   </section>
@@ -77,8 +77,13 @@
   </section>
 
   <footer class="ps-footer">
-    <p>📡 规则库版本: <span id="dbVersion">2025.06.22</span></p>
-    <p>收录 <span id="dbCount">35</span> 款软件 · 开源免费</p>
+    <div class="ps-sync-status">
+      <div class="ps-sync-dot ps-sync-pending" id="syncDot"></div>
+      <span id="syncText">等待同步...</span>
+      <span class="ps-sync-time" id="lastSyncTime"></span>
+    </div>
+    <p>📡 规则库版本: <span id="dbVersion">—</span></p>
+    <p>收录 <span id="dbCount">0</span> 款软件 · 开源免费 · 云端同步</p>
   </footer>
 
   <script src="popup.js"></script>

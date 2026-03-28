@@ -1,5 +1,6 @@
 /* ============================================
    PureSearch · Popup 仪表盘样式
+   云端数据库版
    ============================================ */
 
 * {
@@ -180,6 +181,10 @@ body {
   transform: translateX(2px);
 }
 
+.ps-action-btn:disabled {
+  cursor: not-allowed;
+}
+
 .ps-action-icon {
   font-size: 18px;
 }
@@ -250,11 +255,43 @@ body {
   transform: translateX(18px);
 }
 
-/* ===== Footer ===== */
+/* ===== Footer & 同步状态 ===== */
 .ps-footer {
   padding: 14px 16px 16px;
   text-align: center;
   font-size: 11px;
   color: #94a3b8;
   line-height: 1.6;
+}
+
+.ps-sync-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.ps-sync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ps-sync-ok { background: #16a34a; }
+.ps-sync-error { background: #dc2626; }
+.ps-sync-pending { background: #f59e0b; }
+
+.ps-sync-time {
+  color: #b0b8c4;
+  font-size: 10.5px;
+}
+
+/* ===== 旋转动画 (同步按钮) ===== */
+@keyframes ps-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

@@ -1,5 +1,6 @@
 /* ============================================
    PureSearch · Popup 仪表盘逻辑
+   云端数据库版
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -7,9 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
   chrome.runtime.sendMessage({ action: 'get_stats' }, (stats) => {
     if (stats) {
       animateNumber('statOfficial', stats.totalOfficialFound || 0);
-      animateNumber('statMarked', stats.totalMarked || 0); // 更改为 totalMarked
+      animateNumber('statMarked', stats.totalMarked || 0);
       animateNumber('statReports', stats.totalReports || 0);
     }
+  });
+
+  // ========== 加载同步状态 ==========
+  chrome.runtime.sendMessage({ action: 'get_sync_status' }, (sync) => {
+    updateSyncUI(sync);
   });
 
   // ========== 加载设置 ==========
@@ -23,18 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ========== 设置变更监听 ==========
-  const toggleIds = {
-    'toggleBing': 'enableBing',
-    'toggleBaidu': 'enableBaidu'
-  };
-
+  const toggleIds = { 'toggleBing': 'enableBing', 'toggleBaidu': 'enableBaidu' };
   Object.keys(toggleIds).forEach(id => {
     const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('change', () => {
-        saveSettings();
-      });
-    }
+    if (el) el.addEventListener('change', saveSettings);
   });
 
   function saveSettings() {
@@ -46,6 +44,31 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     chrome.runtime.sendMessage({ action: 'save_settings', data: settings });
   }
+
+  // ========== 同步按钮 ==========
+  document.getElementById('btnSync').addEventListener('click', () => {
+    const btn = document.getElementById('btnSync');
+    const icon = btn.querySelector('.ps-action-icon');
+    btn.disabled = true;
+    btn.style.opacity = '0.6';
+    icon.style.animation = 'ps-spin 1s linear infinite';
+
+    chrome.runtime.sendMessage({ action: 'force_sync' }, () => {
+      setTimeout(() => {
+        chrome.runtime.sendMessage({ action: 'get_sync_status' }, (sync) => {
+          updateSyncUI(sync);
+          btn.disabled = false;
+          btn.style.opacity = '1';
+          icon.style.animation = '';
+          if (sync && sync.status === 'ok') {
+            showToast('✅ 数据库同步成功');
+          } else {
+            showToast('⚠️ 同步失败，使用本地缓存');
+          }
+        });
+      }, 500);
+    });
+  });
 
   // ========== 快捷操作按钮 ==========
   document.getElementById('btnReportCurrent').addEventListener('click', () => {
@@ -75,24 +98,59 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document.getElementById('btnDatabase').addEventListener('click', () => {
-    showToast('当前收录 35 款常用软件的官网信息');
-  });
+  // ========== 同步状态 UI 更新 ==========
+  function updateSyncUI(sync) {
+    const dbVersionEl = document.getElementById('dbVersion');
+    const dbCountEl = document.getElementById('dbCount');
+    const syncDotEl = document.getElementById('syncDot');
+    const syncTextEl = document.getElementById('syncText');
+    const lastSyncEl = document.getElementById('lastSyncTime');
+
+    if (!sync) {
+      if (syncTextEl) syncTextEl.textContent = '尚未同步';
+      return;
+    }
+
+    if (dbVersionEl) dbVersionEl.textContent = sync.dbVersion || '未知';
+    if (dbCountEl) dbCountEl.textContent = sync.entryCount || '0';
+
+    if (sync.status === 'ok') {
+      if (syncDotEl) { syncDotEl.className = 'ps-sync-dot ps-sync-ok'; }
+      if (syncTextEl) syncTextEl.textContent = '云端已同步';
+    } else if (sync.status === 'error') {
+      if (syncDotEl) { syncDotEl.className = 'ps-sync-dot ps-sync-error'; }
+      if (syncTextEl) syncTextEl.textContent = '同步失败（使用缓存）';
+    } else {
+      if (syncDotEl) { syncDotEl.className = 'ps-sync-dot ps-sync-pending'; }
+      if (syncTextEl) syncTextEl.textContent = '等待同步...';
+    }
+
+    if (lastSyncEl && sync.lastSync) {
+      lastSyncEl.textContent = formatTimeAgo(sync.lastSync);
+    }
+  }
+
+  function formatTimeAgo(timestamp) {
+    const diff = Date.now() - timestamp;
+    const minutes = Math.floor(diff / 60000);
+    if (minutes < 1) return '刚刚';
+    if (minutes < 60) return `${minutes} 分钟前`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours} 小时前`;
+    const days = Math.floor(hours / 24);
+    return `${days} 天前`;
+  }
 
   // ========== 数字递增动画 ==========
   function animateNumber(elementId, target) {
     const el = document.getElementById(elementId);
     if (!el) return;
     if (target === 0) { el.textContent = '0'; return; }
-
     let current = 0;
     const step = Math.max(1, Math.floor(target / 20));
     const interval = setInterval(() => {
       current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(interval);
-      }
+      if (current >= target) { current = target; clearInterval(interval); }
       el.textContent = current.toLocaleString();
     }, 30);
   }
