@@ -48,32 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const software = document.getElementById('reportSoftware').value;
     const threats = document.querySelectorAll('input[name="threat"]:checked');
 
-    // 验证
-    if (!url) {
-      shakeElement(document.getElementById('reportUrl'));
-      return;
-    }
-    if (!software) {
-      shakeElement(document.getElementById('reportSoftware'));
-      return;
-    }
-    if (threats.length === 0) {
-      alert('请至少选择一种威胁类型');
-      return;
-    }
+    if (!url) { shakeElement(document.getElementById('reportUrl')); return; }
+    if (!software) { shakeElement(document.getElementById('reportSoftware')); return; }
+    if (threats.length === 0) { alert('请至少选择一种威胁类型'); return; }
 
     showStep(2);
   });
 
-  // 上一步按钮
   document.getElementById('btnPrev2').addEventListener('click', () => {
     showStep(1);
   });
 
-  // ========== 文件上传 ==========
+  // ========== 文件上传 & Base64 转换 ==========
   const fileArea = document.getElementById('fileArea');
   const fileInput = document.getElementById('reportScreenshot');
   const filePreview = document.getElementById('filePreview');
+  const uploadedBase64 = [];
 
   fileArea.addEventListener('click', () => fileInput.click());
 
@@ -96,35 +86,36 @@ document.addEventListener('DOMContentLoaded', () => {
     handleFiles(fileInput.files);
   });
 
-  const uploadedFiles = [];
-
   function handleFiles(files) {
     Array.from(files).forEach(file => {
       if (!file.type.startsWith('image/')) return;
-      if (file.size > 5 * 1024 * 1024) {
-        alert('文件大小不能超过 5MB');
+      if (file.size > 2 * 1024 * 1024) {
+        alert('单张截图不能超过 2MB');
+        return;
+      }
+      if (uploadedBase64.length >= 3) {
+        alert('最多上传 3 张截图');
         return;
       }
 
-      uploadedFiles.push(file);
-
       const reader = new FileReader();
       reader.onload = (e) => {
+        const base64Data = e.target.result;
+        uploadedBase64.push(base64Data);
+
         const img = document.createElement('img');
-        img.src = e.target.result;
+        img.src = base64Data;
         filePreview.appendChild(img);
+
+        fileArea.querySelector('.file-placeholder').innerHTML =
+          `<span class="file-icon">📎</span><span>已上传 ${uploadedBase64.length}/3 张截图</span>`;
       };
       reader.readAsDataURL(file);
     });
-
-    if (uploadedFiles.length > 0) {
-      fileArea.querySelector('.file-placeholder').innerHTML =
-        `<span class="file-icon">📎</span><span>已选择 ${uploadedFiles.length} 张截图</span>`;
-    }
   }
 
   // ========== 提交举报 ==========
-  document.getElementById('btnSubmit').addEventListener('click', () => {
+  document.getElementById('btnSubmit').addEventListener('click', async () => {
     const url = document.getElementById('reportUrl').value.trim();
     const software = document.getElementById('reportSoftware').value === 'other'
       ? document.getElementById('otherSoftware').value
@@ -135,39 +126,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const description = document.getElementById('reportDesc').value.trim();
     const source = document.getElementById('reportSource').value;
-    const keyword = document.getElementById('reportKeyword').value.trim();
 
     const reportData = {
       url,
       title: preTitle || '',
       software,
       threats,
-      category: threats.join(','),
-      description: [
-        description,
-        source ? `来源: ${source}` : '',
-        keyword ? `关键词: ${keyword}` : '',
-        uploadedFiles.length > 0 ? `附带 ${uploadedFiles.length} 张截图` : ''
-      ].filter(Boolean).join('\n'),
+      description,
+      source,
+      screenshots: uploadedBase64,
       timestamp: new Date().toISOString()
     };
 
-    // 发送给 background service worker
+    const btn = document.getElementById('btnSubmit');
+    btn.disabled = true;
+    btn.textContent = '⏳ 提交中...';
+
     if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
       chrome.runtime.sendMessage({
         action: 'submit_report',
         data: reportData
       }, (response) => {
-        if (response && response.success) {
+        btn.disabled = false;
+        btn.textContent = '🚩 提交举报';
+
+        if (!response) {
+          alert('提交失败：无响应，请重试');
+          return;
+        }
+
+        if (response.success) {
           showStep(3);
-          document.getElementById('reportId').textContent = 'PS-' + Date.now().toString(36).toUpperCase();
+
+          // 显示举报编号
+          document.getElementById('reportId').textContent = response.reportId || '-';
+
+          // 显示举报人数和进度
+          const countEl = document.getElementById('reportCount');
+          const progressEl = document.getElementById('reportProgress');
+          const progressFill = document.getElementById('reportProgressFill');
+          const blockedEl = document.getElementById('reportBlocked');
+
+          if (response.currentCount > 0) {
+            // 有云端数据
+            if (countEl) countEl.textContent = `已有 ${response.currentCount} 人举报该网站`;
+
+            if (progressEl && progressFill && response.threshold) {
+              progressEl.style.display = 'block';
+              const pct = Math.min(100, Math.round((response.currentCount / response.threshold) * 100));
+              progressFill.style.width = pct + '%';
+              progressFill.textContent = `${response.currentCount}/${response.threshold}`;
+            }
+
+            if (response.autoBlocked && blockedEl) {
+              blockedEl.style.display = 'block';
+            }
+          } else if (response.currentCount === -1) {
+            // 离线模式
+            if (countEl) countEl.textContent = '已保存至本地（网络不可用，待联网后同步）';
+          }
+
+        } else if (response.error === 'already_reported') {
+          alert('您已举报过该网站，无需重复提交。');
+        } else {
+          alert(response.message || '提交失败，请重试');
         }
       });
     } else {
-      // 脱离扩展环境 (调试用)
-      console.log('Report data:', reportData);
+      // 脱离扩展环境（调试用）
+      console.log('Debug Report:', reportData);
+      btn.disabled = false;
+      btn.textContent = '🚩 提交举报';
       showStep(3);
-      document.getElementById('reportId').textContent = 'PS-' + Date.now().toString(36).toUpperCase();
+      document.getElementById('reportId').textContent = 'DEBUG-' + Date.now().toString(36).toUpperCase();
     }
   });
 
@@ -186,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     el.focus();
   }
 
-  // 添加抖动动画
+  // 注入抖动动画
   const style = document.createElement('style');
   style.textContent = `
     @keyframes shake {

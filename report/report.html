@@ -23,6 +23,7 @@
     </div>
 
     <form id="reportForm">
+      <!-- ===== 步骤1：网站信息 ===== -->
       <section class="report-section" id="step1">
         <div class="form-group">
           <label class="form-label">被举报网址 <span class="required">*</span></label>
@@ -75,6 +76,7 @@
         <button type="button" class="btn btn-primary" id="btnNext1">下一步 →</button>
       </section>
 
+      <!-- ===== 步骤2：详细描述 ===== -->
       <section class="report-section" id="step2" style="display:none;">
         <div class="form-group">
           <label class="form-label">详细描述</label>
@@ -89,7 +91,7 @@
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">截图证据</label>
+          <label class="form-label">截图证据 <small style="color:#999;">(最多3张，每张≤2MB)</small></label>
           <div class="form-file-area" id="fileArea">
             <input type="file" id="reportScreenshot" accept="image/*" multiple style="display:none;">
             <div class="file-placeholder"><span>点击或拖拽上传截图 (可选)</span></div>
@@ -102,6 +104,7 @@
         </div>
       </section>
 
+      <!-- ===== 步骤3：提交完成 ===== -->
       <section class="report-section" id="step3" style="display:none;">
         <div class="report-success">
           <div class="success-icon">✅</div>
@@ -110,8 +113,23 @@
           <div class="success-info">
             <div class="success-row"><span>举报编号</span><span id="reportId">-</span></div>
             <div class="success-row"><span>举报状态</span><span class="status-pending">待审核</span></div>
+            <div class="success-row"><span>社区响应</span><span id="reportCount">统计中...</span></div>
           </div>
-          <button type="button" class="btn btn-primary" id="btnClose">关闭窗口</button>
+
+          <!-- 举报进度条 -->
+          <div id="reportProgress" style="display:none; margin-top:12px;">
+            <p style="font-size:12px; color:#666; margin-bottom:4px;">距离自动加入黑名单：</p>
+            <div style="background:#e5e7eb; border-radius:8px; height:22px; overflow:hidden; position:relative;">
+              <div id="reportProgressFill" style="background:linear-gradient(90deg,#2563eb,#1d4ed8); height:100%; border-radius:8px; min-width:30px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; font-weight:600; transition:width 0.6s ease;">0/10</div>
+            </div>
+          </div>
+
+          <!-- 自动封禁提示 -->
+          <div id="reportBlocked" style="display:none; margin-top:12px; padding:10px 14px; background:#dcfce7; border:1px solid #86efac; border-radius:8px; color:#166534; font-size:13px;">
+            🎉 <strong>该网站已被社区自动封禁！</strong>所有 PureSearch 用户将在下次同步后自动拦截此网站。
+          </div>
+
+          <button type="button" class="btn btn-primary" id="btnClose" style="margin-top:16px;">关闭窗口</button>
         </div>
       </section>
     </form>

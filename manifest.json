@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "PureSearch · 净网路标",
+  "version": "1.2.0",
   "description": "搜索引擎防污染：官网置顶高亮、搜索结果标记、一键举报假冒官网，让每一次搜索都安全。",
-  "version": "1.1.0",
   "author": "PureSearch Team",
   "icons": {
     "16": "icons/icon16.png",
@@ -10,23 +10,15 @@
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_icon": {
-      "16": "icons/icon16.png",
-      "48": "icons/icon48.png"
-    },
     "default_popup": "popup/popup.html",
+    "default_icon": { "16": "icons/icon16.png", "48": "icons/icon48.png" },
     "default_title": "PureSearch · 净网路标"
   },
   "background": {
     "service_worker": "background/service-worker.js",
     "type": "module"
   },
-  "permissions": [
-    "storage",
-    "activeTab",
-    "contextMenus",
-    "alarms"
-  ],
+  "permissions": ["storage", "activeTab", "contextMenus", "alarms"],
   "host_permissions": [
     "*://*.bing.com/*",
     "*://*.baidu.com/*",
@@ -34,41 +26,22 @@
   ],
   "content_scripts": [
     {
-      "matches": [
-        "*://*.bing.com/search*"
-      ],
-      "js": [
-        "content/bing-inject.js"
-      ],
-      "css": [
-        "content/bing-style.css"
-      ],
+      "matches": ["*://*.bing.com/search*"],
+      "js": ["content/bing-inject.js"],
+      "css": ["content/bing-style.css"],
       "run_at": "document_idle"
     },
     {
-      "matches": [
-        "*://*.baidu.com/s*"
-      ],
-      "js": [
-        "content/baidu-inject.js"
-      ],
-      "css": [
-        "content/baidu-style.css"
-      ],
+      "matches": ["*://*.baidu.com/s*"],
+      "js": ["content/baidu-inject.js"],
+      "css": ["content/baidu-style.css"],
       "run_at": "document_idle"
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": [
-        "report/report.html",
-        "report/report.css",
-        "report/report.js",
-        "icons/*"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
+      "resources": ["report/report.html", "report/report.css", "report/report.js", "icons/*"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

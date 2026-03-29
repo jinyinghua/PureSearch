@@ -7,6 +7,7 @@
 
   let SOFTWARE_DB = [];
   let GLOBAL_FAKE_DOMAINS = [];
+  let COMMUNITY_FAKE_SITES = []; // 社区举报黑名单
 
   function extractDomain(url) { 
     try { 
@@ -18,8 +19,19 @@
   
   function domainMatches(hostname, list) { 
     if (!list || !Array.isArray(list) || !hostname) return false;
-    // 移除了危险的 d.includes(hostname)，只保留精确匹配和子域名匹配
     return list.some(d => hostname === d || hostname.endsWith('.' + d)); 
+  }
+
+  // 检查是否命中社区举报黑名单
+  function matchCommunityFake(hostname) {
+    if (!COMMUNITY_FAKE_SITES || COMMUNITY_FAKE_SITES.length === 0) return null;
+    for (const entry of COMMUNITY_FAKE_SITES) {
+      const domain = typeof entry === 'string' ? entry : entry.domain;
+      if (hostname === domain || hostname.endsWith('.' + domain)) {
+        return typeof entry === 'string' ? { domain: entry, software: '未知' } : entry;
+      }
+    }
+    return null;
   }
 
   function classifyUrl(url) {
@@ -34,6 +46,18 @@
       if (domainMatches(hostname, sw.official_domains || [])) return { type: 'official', software: sw, domain: hostname };
       if (domainMatches(hostname, sw.known_fakes || [])) return { type: 'fake', software: sw, domain: hostname };
     }
+
+    // 社区举报黑名单检测
+    const communityHit = matchCommunityFake(hostname);
+    if (communityHit) {
+      return { 
+        type: 'fake', 
+        software: { name: communityHit.software || '未知', official_domains: [] },
+        domain: hostname,
+        source: 'community'
+      };
+    }
+
     return null;
   }
 
@@ -63,17 +87,19 @@
     return link ? link.href : '';
   }
 
-  function createBadge(type, sw) {
+  function createBadge(type, sw, isCommunity) {
     const el = document.createElement('div');
     if (type === 'official') {
       el.className = 'ps-badge ps-badge-official';
       el.innerHTML = `<span>✅</span> <strong>官方正版</strong> · ${sw.name} 官方网站 <small>PureSearch 验证</small>`;
     } else if (type === 'fake') {
       el.className = 'ps-overlay ps-overlay-fake';
-      const safe = sw.official_domains && sw.official_domains.length > 0 ? 'https://' + sw.official_domains[0] : '#';
+      const safe = sw.official_domains && sw.official_domains.length > 0 ? 'https://' + sw.official_domains[0] : '';
+      const sourceTag = isCommunity ? ' <small style="opacity:0.7;">(社区举报)</small>' : '';
+      const officialLink = safe ? `<a href="${safe}" target="_blank" class="ps-overlay-link">前往官网 →</a>` : '';
       el.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-          <div><span>🚫</span> <strong>假冒标记</strong> · 疑似假冒 <em>${sw.name}</em> 的盗版网站 <a href="${safe}" target="_blank" class="ps-overlay-link">前往官网 →</a></div>
+          <div><span>🚫</span> <strong>假冒标记</strong> · 疑似假冒 <em>${sw.name}</em> 的盗版网站${sourceTag} ${officialLink}</div>
           <button class="ps-expand-btn" style="background:none; border:none; color:#999; cursor:pointer; font-size:12px; text-decoration:underline;">继续访问原网页</button>
         </div>
       `;
@@ -109,19 +135,18 @@
           break;
         case 'fake':
           item.classList.add('ps-result-fake');
-          const badge = createBadge('fake', cls.software);
+          const isCommunity = cls.source === 'community';
+          const badge = createBadge('fake', cls.software, isCommunity);
           
-          // 隐藏除 badge 外的其他内容
           const originalChildren = Array.from(item.children);
           originalChildren.forEach(c => { c.style.display = 'none'; });
           
-          // 绑定“展开/继续访问”按钮逻辑
           const expandBtn = badge.querySelector('.ps-expand-btn');
           expandBtn.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
             originalChildren.forEach(c => { c.style.display = ''; });
-            expandBtn.style.display = 'none'; // 隐藏按钮本身
+            expandBtn.style.display = 'none';
           });
 
           item.prepend(badge);
@@ -143,10 +168,11 @@
   }
 
   function init() {
-    chrome.storage.local.get(['software_db', 'global_fake_patterns', 'settings'], (r) => {
+    chrome.storage.local.get(['software_db', 'global_fake_patterns', 'community_fake_sites', 'settings'], (r) => {
       if (r.settings && r.settings.enableBaidu === false) return;
       SOFTWARE_DB = r.software_db || [];
       GLOBAL_FAKE_DOMAINS = r.global_fake_patterns || [];
+      COMMUNITY_FAKE_SITES = r.community_fake_sites || [];
       processBaiduResults();
       const target = document.getElementById('content_left');
       if (target) new MutationObserver(() => processBaiduResults()).observe(target, { childList: true, subtree: true });

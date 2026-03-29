@@ -89,10 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('暂无举报记录');
         return;
       }
-      let msg = '最近举报:\n';
+      let msg = '最近举报：\n';
       reports.slice(0, 5).forEach((r, i) => {
         const date = new Date(r.timestamp).toLocaleDateString('zh-CN');
-        msg += `${i + 1}. ${r.url.substring(0, 40)}... (${date})\n`;
+        const status = r.status === 'local_only' ? '⚡本地' : (r.autoBlocked ? '🚫已封禁' : '⏳待审');
+        const domain = r.domain || r.url?.substring(0, 35);
+        msg += `${i + 1}. ${domain} [${status}] (${date})\n`;
       });
       alert(msg);
     });
@@ -102,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateSyncUI(sync) {
     const dbVersionEl = document.getElementById('dbVersion');
     const dbCountEl = document.getElementById('dbCount');
+    const communityCountEl = document.getElementById('communityCount');
     const syncDotEl = document.getElementById('syncDot');
     const syncTextEl = document.getElementById('syncText');
     const lastSyncEl = document.getElementById('lastSyncTime');
@@ -113,15 +116,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (dbVersionEl) dbVersionEl.textContent = sync.dbVersion || '未知';
     if (dbCountEl) dbCountEl.textContent = sync.entryCount || '0';
+    if (communityCountEl) communityCountEl.textContent = sync.communityCount || '0';
 
     if (sync.status === 'ok') {
-      if (syncDotEl) { syncDotEl.className = 'ps-sync-dot ps-sync-ok'; }
+      if (syncDotEl) syncDotEl.className = 'ps-sync-dot ps-sync-ok';
       if (syncTextEl) syncTextEl.textContent = '云端已同步';
     } else if (sync.status === 'error') {
-      if (syncDotEl) { syncDotEl.className = 'ps-sync-dot ps-sync-error'; }
+      if (syncDotEl) syncDotEl.className = 'ps-sync-dot ps-sync-error';
       if (syncTextEl) syncTextEl.textContent = '同步失败（使用缓存）';
     } else {
-      if (syncDotEl) { syncDotEl.className = 'ps-sync-dot ps-sync-pending'; }
+      if (syncDotEl) syncDotEl.className = 'ps-sync-dot ps-sync-pending';
       if (syncTextEl) syncTextEl.textContent = '等待同步...';
     }
 
